@@ -158,7 +158,7 @@ void OPL2_Reset(opl2_chip *chip, uint32_t samplerate);
 void OPL2_WriteReg(opl2_chip *chip, uint8_t reg, uint8_t v);
 void OPL2_WriteRegBuffered(opl2_chip *chip, uint8_t reg, uint8_t v);
 void OPL2_GenerateStream(opl2_chip *chip, int16_t *sndptr, uint32_t numsamples);
-void OPL2_ReadStatus(opl2_chip *chip);
+uint8_t OPL2_ReadStatus(opl2_chip *chip);
 
 #ifdef __cplusplus
 }

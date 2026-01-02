@@ -29,8 +29,6 @@
  * version: 0.9 beta
  */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "opl2.h"
 
@@ -861,13 +859,10 @@ static int16_t OPL2_OutputCrush(int16_t sample)
 
 inline void OPL2_Generate(opl2_chip *chip, int16_t * sample)
 {
-    opl2_channel *channel;
     opl2_writebuf *writebuf;
-    int16_t **out;
     int32_t mix;
     uint8_t ii;
-    int16_t accm;
-    uint8_t shift = 0;
+    uint8_t shift;
 
     *sample = OPL2_OutputCrush(chip->mixbuff);
 
@@ -965,6 +960,7 @@ inline void OPL2_Generate(opl2_chip *chip, int16_t * sample)
 
     if (chip->eg_state)
     {
+        shift = 0;
         while (shift < 13 && ((chip->eg_timer >> shift) & 1) == 0)
         {
             shift++;
@@ -1187,7 +1183,7 @@ void OPL2_WriteRegBuffered(opl2_chip *chip, uint8_t reg, uint8_t v)
         chip->writebuf_samplecnt = writebuf->time;
     }
 
-    writebuf->reg = reg | 0x100;
+    writebuf->reg = (uint16_t)reg | 0x100;
     writebuf->data = v;
     time1 = chip->writebuf_lasttime + OPL2_WRITEBUF_DELAY;
     time2 = chip->writebuf_samplecnt;
