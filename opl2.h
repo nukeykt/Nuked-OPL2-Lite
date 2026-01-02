@@ -36,7 +36,7 @@
 extern "C" {
 #endif
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #define OPL2_WRITEBUF_SIZE   1024
 #define OPL2_WRITEBUF_DELAY  2

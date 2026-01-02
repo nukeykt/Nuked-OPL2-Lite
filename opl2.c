@@ -881,9 +881,9 @@ inline void OPL2_Generate(opl2_chip *chip, int16_t * sample)
     if (chip->channel[0].con && !chip->slot[0].eg_mute)
         mix += chip->slot[0].out;
     if (chip->channel[1].con && !chip->slot[1].eg_mute)
-        mix += chip->slot[0].out;
+        mix += chip->slot[1].out;
     if (chip->channel[2].con && !chip->slot[2].eg_mute)
-        mix += chip->slot[0].out;
+        mix += chip->slot[2].out;
     if (!chip->slot[3].eg_mute)
         mix += chip->slot[3].out;
     if (!chip->slot[4].eg_mute)
@@ -1170,7 +1170,7 @@ void OPL2_WriteReg(opl2_chip *chip, uint8_t reg, uint8_t v)
     }
 }
 
-void OPL2_WriteRegBuffered(opl2_chip *chip, uint16_t reg, uint8_t v)
+void OPL2_WriteRegBuffered(opl2_chip *chip, uint8_t reg, uint8_t v)
 {
     uint64_t time1, time2;
     opl2_writebuf *writebuf;
