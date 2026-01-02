@@ -822,15 +822,16 @@ static void OPL2_ProcessTimers(opl2_chip *chip)
     }
 }
 
-static int16_t OPL2_OutputCrush(int16_t sample)
+static int16_t OPL2_OutputCrush(int32_t sample)
 {
+    uint8_t shift;
+    int32_t top;
     if (sample > 32767)
         sample = 32767;
     else if (sample < -32768)
         sample = -32768;
 
-    int shift;
-    int16_t top = sample >> 9;
+    top = sample >> 9;
     if (top < 0)
         top = (~top) & 63;
     else
@@ -854,10 +855,10 @@ static int16_t OPL2_OutputCrush(int16_t sample)
     sample >>= shift;
     sample <<= shift;
 
-    return sample;
+    return (int16_t)sample;
 }
 
-inline void OPL2_Generate(opl2_chip *chip, int16_t * sample)
+void OPL2_Generate(opl2_chip *chip, int16_t * sample)
 {
     opl2_writebuf *writebuf;
     int32_t mix;
